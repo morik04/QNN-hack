@@ -46,40 +46,49 @@ def pyramid(n):
     for x in range(1,n):
         inner_list = []
         if x%2 == 1:
-            inner_list.append((7,8))
+            inner_list.append((9,10))
             if x>2:
-                inner_list.append((5,6))
+                inner_list.append((7,8))
                 if x>4:
-                    inner_list.append((3,4))
+                    inner_list.append((5,6))
                     if x>6:
-                        inner_list.append((1,2))
+                        inner_list.append((3,4))
+                        if x>8:
+                            inner_list.append((1,2))
         if x%2 == 0:
-          inner_list.append((6,7))  
+          inner_list.append((8,9))  
           if x>3:
-              inner_list.append((4,5))
+              inner_list.append((6,7))
               if x>5:
-                  inner_list.append((2,3))
+                  inner_list.append((4,5))
+                  if x>7:
+                      inner_list.append((2,3))
         output_list.append(inner_list)
     for y in range(n,0, -1):
         inner_list = []
         if y%2 == 1:
-            inner_list.append((7,8))
+            inner_list.append((9,10))
             if y>2:
-                inner_list.append((5,6))
+                inner_list.append((7,8))
                 if y>4:
-                    inner_list.append((3,4))
+                    inner_list.append((5,6))
+                    if y>6:
+                        inner_list.append((3,4))
+                    
         if y%2 == 0:
-          inner_list.append((6,7))  
+          inner_list.append((8,9))  
           if y>3:
-              inner_list.append((4,5))
+              inner_list.append((6,7))
               if y>5:
-                  inner_list.append((2,3))
+                  inner_list.append((4,5))
+                  if y>7:
+                      inner_list.append((2,3))
         output_list.append(inner_list)
     
     return output_list
     
         
-print(pyramid(8))
+print(pyramid(10))
 
 
 
