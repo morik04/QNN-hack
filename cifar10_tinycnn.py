@@ -15,6 +15,10 @@ import torchvision
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
+from time import gmtime, strftime
+
+x = strftime("%H:%M:%S", gmtime())
+print("Start time: ", x)
 
 # ================== Config & Hyperparameters ==================
 BATCH_SIZE = 64
@@ -63,22 +67,22 @@ class SimpleCNN(nn.Module):
     def __init__(self, num_classes: int = 10):
         super().__init__()
         self.conv_layers = nn.Sequential(
-            nn.Conv2d(3, 32, 3, padding=1),
+            nn.Conv2d(3, 16, 3, padding=1),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+            nn.Conv2d(16, 32, 3, padding=1),
             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2),
-            nn.Conv2d(32, 64, 3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.MaxPool2d(2),
-            nn.Conv2d(64, 128, 3, padding=1),
-            nn.BatchNorm2d(128),
+            nn.Conv2d(32, 32, 3, padding=1),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(128*4*4, 128),
+            nn.Linear(32*4*4, 128),
             nn.ReLU(),
             nn.Dropout(0.5),
             nn.Linear(128, num_classes)
@@ -126,7 +130,7 @@ def train(
         avg_val_loss = val_loss / len(validloader.dataset)
         val_acc = 100. * correct / total
         valid_losses.append(avg_val_loss)
-        print(f"Epoch {epoch+1}/{epochs} - Train Loss: {avg_train_loss:.4f} - Val Loss: {avg_val_loss:.4f} - Val Acc: {val_acc:.2f}%")
+        print(f"Epoch {epoch+1}/{epochs} - Train Loss: {avg_train_loss:.4f} - Val Loss: {avg_val_loss:.4f} - Val Acc: {val_acc:.2f}%, Current time: ", strftime("%H:%M:%S", gmtime()))
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             torch.save(model.state_dict(), 'best_model.pth')
@@ -165,6 +169,7 @@ def main():
     plt.legend()
     plt.show()
     print(f"Final Test Accuracy: {acc:.2f}%")
+    print("End time: ", strftime("%H:%M:%S", gmtime()))
 
 if __name__ == '__main__':
     main()
